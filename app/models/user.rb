@@ -1,20 +1,28 @@
 class User < ActiveRecord::Base
-require 'role_model'
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
 
-  #Integer representation of different roles/role groups
-  attr_accessor :roles_mask
+  attr_accessor :password
+  validates_confirmation_of :password
+  before_save :encrypt_password
 
-  include RoleModel
 
-  roles_attribute :roles_mask
-  roles :admin, :player
 
   has_many :answers
   has_many :questions, through: :answers
 
   belongs_to :game, dependent: :destroy
+
+  def encrypt_password
+    self.salt = BCrypt::Engine.generate_salt
+    self.encrypted_password = BCrypt::Engine.hash_secret(password, salt)
+  end
+
+  def self.authenticate(email, password)
+    user = User.where(email: email).first
+    if user && user.encrypted_password == BCrypt::Engine.hash_secret(password, user.salt)
+      user
+    else
+      nil
+    end
+
+  end
 end
