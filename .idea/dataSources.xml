@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3407375783">
+    <data-source source="LOCAL" name="Rails OnePlusOne: development" uuid="6c977a9e-05b6-4729-b6e3-166e98a31825">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:OPO_Dev</jdbc-url>
+      <user-name>postgres</user-name>
+      <user-password>dfcbdfc6dfdedfcfdfc9dfc6dfcbdfc4dfd9dfc3dfc4dfcd</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails OnePlusOne: test" uuid="ed231f5d-2ffe-4e51-9c66-fdb256a70c02">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:OPO_Test</jdbc-url>
+      <user-name>postgres</user-name>
+      <user-password>dfcbdfc6dfdedfcfdfc9dfc6dfcbdfc4dfd9dfc3dfc4dfcd</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails OnePlusOne: production" uuid="5d1f903a-5978-4ded-87b6-014c15e61b64">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:OPO_Prod</jdbc-url>
+      <user-name>postgres</user-name>
+      <user-password>dfcbdfc6dfdedfcfdfc9dfc6dfcbdfc4dfd9dfc3dfc4dfcd</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

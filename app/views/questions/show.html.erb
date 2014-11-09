@@ -1,0 +1,29 @@
+<p>
+  <strong>Question text:</strong>
+  <%= @question.question_text %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @question.description %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @question.location %>
+</p>
+
+<p>
+  <strong>Picture:</strong>
+  <%= image_tag(@question.picture_url(:thumb)) if @question.picture.present? %>
+</p>
+
+<p>
+  <strong>Answers:</strong>
+  <% @question.answers.each do |f| %>
+      <%= link_to f.answer_text, {:controller => "answers", :action => "show", :id => f.id} %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_question_path(@question) %> |
+<%= link_to 'Back', questions_path %>

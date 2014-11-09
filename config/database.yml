@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: OPO_Dev
+  pool: 5
+  username: postgres
+  password: alteclansing
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: OPO_Test
+  pool: 5
+  username: postgres
+  password: alteclansing
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: OPO_Prod
+  pool: 5
+  username: postgres
+  password: alteclansing
