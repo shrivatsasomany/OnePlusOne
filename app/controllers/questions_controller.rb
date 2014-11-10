@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_admin, only: [:index, :create]
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   respond_to :html, :json, :xml
   def index
@@ -43,12 +44,31 @@ class QuestionsController < ApplicationController
   end
 
   private
-    def set_question
-      @question = Question.find(params[:id])
-    end
 
-    def question_params
-      params.require(:question).permit(:question_text, :description, :location, :picture, :question_type, :game_id)
+  def authenticate_admin
+
+    if params.has_key?(:api_key)
+      if params[:api_key] == 1234.to_s
+        @user = User.find(params[:user_id])
+        if (@user) && (@user.isAdmin?)
+          return true
+        end
+      else
+        if (current_user) && (current_user.isAdmin?)
+          return true
+        end
+      end
     end
+    error = {'error'=>'not authenticated'}.to_json
+    render :json => error, status: :not_authorized
+  end
+
+  def set_question
+    @question = Question.find(params[:id])
+  end
+
+  def question_params
+    params.require(:question).permit(:question_text, :description, :location, :picture, :question_type, :game_id)
+  end
 
 end

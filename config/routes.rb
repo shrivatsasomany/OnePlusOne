@@ -8,8 +8,10 @@ Rails.application.routes.draw do
   root 'users#index'
 
   get "/log-in" => "sessions#new", as: :log_in
-  post "/log-in" => "sessions#create"
+  post "/log-in" => "sessions#create", as: :sign_up
   get "/log-out" => "sessions#destroy", as: :log_out
+
+  get "/get-user-api" => "users#api", as: :users_api
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

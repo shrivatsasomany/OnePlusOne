@@ -8,6 +8,8 @@ class Question < ActiveRecord::Base
   attr_accessor :picture
   mount_uploader :picture, PictureUploader
 
+  validates :question_text, uniqueness: true
+
   def as_json(options)
     super(:only => [:question_text, :description, :location, :question_type])
   end
