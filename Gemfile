@@ -41,6 +41,8 @@ gem 'cancan'
 #Role Model for user role definition
 gem 'role_model'
 
+#Annotation for models
+gem 'annotate'
 
 # Use ActiveModel has_secure_password
 gem "bcrypt"
