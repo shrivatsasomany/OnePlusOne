@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :current_user
   respond_to :json, :xml, :html
   def new
 
@@ -8,6 +9,7 @@ class SessionsController < ApplicationController
     @user = User.authenticate(params[:email], params[:password])
 #if an instance is returned and @user is not nil...
     if @user
+      ApiKey.new.add_key(@user)
 #let the user know they've been logged in with a flash message
       respond_to do |format|
         if @user
@@ -30,7 +32,13 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    id = session[:user_id]
+    if params.has_key?(:api_key)
+      ApiKey.find_by_key(params[:api_key]).delete
+      return true
+    end
     session[:user_id] = nil
+    ApiKey.find_by_user_id(id).delete
     redirect_to "/"
   end
 

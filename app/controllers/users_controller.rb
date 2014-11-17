@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_action :current_user, only: [:index]
+#  before_action :authenticate_user, only: :show
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   respond_to :html, :json, :xml
   # GET /users
@@ -21,6 +23,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+
   end
 
   # GET /users/new
@@ -36,7 +39,11 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    if params.has_key?(:roles)
+      @user.roles=[params[:roles]]
+    else
+      @user.roles=:student
+    end
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -65,6 +72,10 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    if current_user
+      ApiKey.find_by_user_id(@user.id).delete
+      session[:user_id] = nil
+    end
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
@@ -73,6 +84,23 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def authenticate_user
+
+    if params.has_key?(:api_key)
+      @api_key = ApiKey.find_by_key(params[:api_key])
+      if(@api_key)
+        return true
+      end
+    end
+
+    if current_user
+      return true
+    end
+    error = {'error'=>'not authenticated'}.to_json
+    render :json => error, status: :not_authorized
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
@@ -80,6 +108,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :name, :game_id, :password, :password_confirmation, :isAdmin)
+      params.require(:user).permit(:email, :name, :game_id, :password, :password_confirmation, :isAdmin, :roles)
     end
 end

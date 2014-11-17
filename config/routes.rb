@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :quantifiers
+
   resources :users
 
   resources :games
@@ -67,4 +69,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  # get "/ruby" => RubyFu
 end
