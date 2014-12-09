@@ -26,11 +26,11 @@ class User < ActiveRecord::Base
   roles_attribute = :roles_mask
   roles :admin, :faculty, :student
 
-  has_many :answers
+  has_many :answers, dependent: :destroy
   has_many :questions, through: :answers
-  has_one :api_key
+  has_one :api_key, dependent: :destroy
 
-  belongs_to :game, dependent: :destroy
+  belongs_to :game
 
   def encrypt_password
     self.salt = BCrypt::Engine.generate_salt
@@ -44,6 +44,16 @@ class User < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  def destroy_api_key
+    if !self.api_key.nil?
+      ApiKey.find_by_user_id(self.id).delete
+    end
+  end
+
+  def isAdministrator
+    return self.isAdmin
   end
 
 end

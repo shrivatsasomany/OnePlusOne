@@ -1,10 +1,19 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
-  respond_to :html, :json, :xml
-
+  respond_to :json, :html
   def index
-    @answers = Answer.all
-    respond_with(@answers)
+    if params.has_key?(:user_id)
+      @id = params[:user_id]
+      @answers = Answer.where(:user_id => @id)
+    elsif params.has_key?(:question_id)
+      @answers = Answer.find_by_question_id(params[:question_id])
+    elsif params.has_key?(:quantifier)
+      @answers = Answer.find_by_quantifier(params[:quantifier])
+    else
+      @answers = Answer.all
+    end
+      respond_with(@answers)
   end
 
   def show
@@ -36,11 +45,42 @@ class AnswersController < ApplicationController
   end
 
   private
-    def set_answer
-      @answer = Answer.find(params[:id])
-    end
 
-    def answer_params
-      params.require(:answer).permit(:answer_text, :user_id, :question_id, :quantifier)
+  def authenticate_admin
+    if params.has_key?(:api_key)
+      @user = ApiKey.find_by_key(params[:api_key]).user
+      if (@user) && (@user.isAdmin?)
+        return true
+      end
+    else
+      if (current_user) && (current_user.isAdmin?)
+        return true
+      end
     end
+    error = {'error'=>'not authenticated'}.to_json
+    render :json => error, status: :not_authorized
+  end
+
+  def authenticate_user
+    if params.has_key?(:api_key)
+      @user = ApiKey.find_by_key(params[:api_key]).user
+      if @user
+        return true
+      end
+    else
+      if current_user
+        return true
+      end
+    end
+    error = {'error'=>'not authenticated'}.to_json
+    render :json => error, status: :not_authorized
+  end
+
+  def set_answer
+    @answer = Answer.find(params[:id])
+  end
+
+  def answer_params
+    params.require(:answer).permit(:answer_text, :user_id, :question_id, :quantifier)
+  end
 end

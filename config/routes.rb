@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :question_types
+
   resources :quantifiers
 
   resources :users
@@ -14,6 +16,7 @@ Rails.application.routes.draw do
   get "/log-out" => "sessions#destroy", as: :log_out
 
   get "/get-user-api" => "users#api", as: :users_api
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

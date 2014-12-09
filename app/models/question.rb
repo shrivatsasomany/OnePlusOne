@@ -16,10 +16,10 @@
 
 class Question < ActiveRecord::Base
 
-  has_many :answers
+  has_many :answers, dependent: :destroy
   has_many :users, through: :answers
 
-  belongs_to :game, dependent: :destroy
+  belongs_to :game
 
   attr_accessor :picture
   mount_uploader :picture, PictureUploader

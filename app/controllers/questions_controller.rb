@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user, only: [:index]
-  before_action :authenticate_admin, only: [:create]
+  before_action :authenticate_admin, except: [:show, :index]
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   respond_to :html, :json, :xml
   def index
@@ -49,14 +49,12 @@ class QuestionsController < ApplicationController
   def authenticate_admin
 
     if params.has_key?(:api_key)
-      @user = ApiKey.find_by_key(params[:user_id])
-      if (@user) && (@user.isAdmin?)
+      @user = ApiKey.find_by_key(params[:api_key]).user
+      if @user && @user.isAdmin?
         return true
       end
     else
-      if (current_user) && (current_user.isAdmin?)
-        return true
-      end
+      return true if current_user && current_user.isAdmin?
     end
     error = {'error'=>'not authenticated'}.to_json
     render :json => error, status: :not_authorized
@@ -64,7 +62,7 @@ class QuestionsController < ApplicationController
 
   def authenticate_user
     if params.has_key?(:api_key)
-      @user = ApiKey.find_by_key(params[:api_key])
+      @user = ApiKey.find_by_key(params[:api_key]).user
       if @user
         return true
       end

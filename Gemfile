@@ -47,6 +47,11 @@ gem 'annotate'
 # Use ActiveModel has_secure_password
 gem "bcrypt"
 
+# Data visualization
+gem 'rails-erd'
+gem 'railroady'
+
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

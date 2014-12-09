@@ -73,7 +73,6 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     if current_user
-      ApiKey.find_by_user_id(@user.id).delete
       session[:user_id] = nil
     end
     @user.destroy

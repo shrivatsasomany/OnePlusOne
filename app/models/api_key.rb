@@ -10,7 +10,7 @@
 #
 
 class ApiKey < ActiveRecord::Base
-  belongs_to :user, dependent: :destroy
+  belongs_to :user
 
   def add_key(user)
     self.key = SecureRandom.hex
