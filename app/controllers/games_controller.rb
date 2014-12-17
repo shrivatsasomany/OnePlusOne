@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
-
+  respond_to :html, :json, :xml
   def index
     @games = Game.all
     respond_with(@games)

@@ -69,6 +69,6 @@ class QuantifiersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quantifier_params
-      params.require(:quantifier).permit(:text)
+      params.require(:quantifier).permit(:text, :game_id)
     end
 end

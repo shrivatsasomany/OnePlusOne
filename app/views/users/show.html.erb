@@ -11,7 +11,7 @@
 
 <p>
   <strong>Game:</strong>
-  <%= @user.game_id %>
+  <%= link_to @user.game_id, {:controller => "games", :action => "show", :id=>@user.game_id} %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

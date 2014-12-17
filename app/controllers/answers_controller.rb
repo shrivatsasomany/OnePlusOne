@@ -3,15 +3,19 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
   respond_to :json, :html
   def index
+    @answers = Answer.all
     if params.has_key?(:user_id)
       @id = params[:user_id]
       @answers = Answer.where(:user_id => @id)
     elsif params.has_key?(:question_id)
-      @answers = Answer.find_by_question_id(params[:question_id])
+      @answers = Answer.where(:question_id => params[:question_id])
     elsif params.has_key?(:quantifier)
-      @answers = Answer.find_by_quantifier(params[:quantifier])
-    else
-      @answers = Answer.all
+      @answers = Answer.where(:quantifier => params[:quantifier])
+    elsif params.has_key?(:question_id) && params.has_key?(:quantifier)
+      @answers = Answer.where(:quantifier =>  params[:quantifier]) & Answer.where(:question_id => params[:question_id])
+    elsif params.has_key?(:location) && params.has_key?(:quantifier)
+      @location_answers =
+      @answers = Answer.where(:quantifier =>  params[:quantifier]) & Answer.joins(:questions).where(:questions => {:location => params[:location]})
     end
       respond_with(@answers)
   end

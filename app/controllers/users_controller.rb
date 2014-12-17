@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  skip_before_action :current_user, only: [:index]
-#  before_action :authenticate_user, only: :show
+  before_action :authenticate_admin, except: :index
+  before_action :authenticate_user, only: :show
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   respond_to :html, :json, :xml
   # GET /users
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     if current_user
-      session[:user_id] = nil
+      session[params[:user_id]] = nil
     end
     @user.destroy
     respond_to do |format|
@@ -83,6 +83,21 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def authenticate_admin
+    if params.has_key?(:api_key)
+      @user = ApiKey.find_by_key(params[:api_key]).user
+      if (@user) && (@user.isAdmin?)
+        return true
+      end
+    else
+      if current_user.isAdmin?
+        return true
+      end
+    end
+    error = {'error'=>'not authenticated'}.to_json
+    render :json => error, status: :not_authorized
+  end
 
   def authenticate_user
 

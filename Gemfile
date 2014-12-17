@@ -34,6 +34,8 @@ gem 'carrierwave'
 gem 'mini_magick'
 
 
+# PaperClip Image Upload
+gem 'paperclip', github: 'thoughtbot/paperclip'
 
 #CanCan for permissions definition
 gem 'cancan'
@@ -51,6 +53,8 @@ gem "bcrypt"
 gem 'rails-erd'
 gem 'railroady'
 
+#Seed-Dump
+gem 'seed_dump'
 
 # Use unicorn as the app server
 # gem 'unicorn'

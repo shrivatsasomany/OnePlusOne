@@ -45,8 +45,6 @@ class SessionsController < ApplicationController
       render :json => error, status: :already_reported
     end
     session[:user_id] = nil
-    ApiKey.find_by_user_id(id).delete
-    redirect_to "/"
   end
 
 end

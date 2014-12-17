@@ -12,12 +12,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json do
-        render json: @question.to_json
-      end
-    end
+    respond_with(@question)
   end
 
   def new
@@ -30,8 +25,17 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    @question.save
-    respond_with(@question)
+    #@question.save
+    #respond_with(@question)
+    respond_to do |format|
+      if @question.save
+        format.html { redirect_to @question, notice: 'Question was successfully created.' }
+        format.json { render :show, status: :created, location: @question }
+      else
+        format.html { render :new }
+        format.json { render json: @question.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
@@ -54,7 +58,7 @@ class QuestionsController < ApplicationController
         return true
       end
     else
-      return true if current_user && current_user.isAdmin?
+      return true if current_user.isAdmin?
     end
     error = {'error'=>'not authenticated'}.to_json
     render :json => error, status: :not_authorized
@@ -80,7 +84,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:question_text, :description, :location, :picture, :question_type, :game_id)
+    params.require(:question).permit(:question_text, :description, :location, :picture, :question_type, :game_id, :is_quantifier)
   end
 
 end
