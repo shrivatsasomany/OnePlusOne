@@ -19,7 +19,7 @@ Rails.application.configure do
       :bucket => 'oneplusoneimages',
       :s3_credentials => {
           :access_key_id => 'AKIAJ7MG2SVIGK5KGAQA',
-          :secret_access_key => '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'
+          :secret_access_key => ''
       }
   }
   # Don't care if the mailer can't send.
