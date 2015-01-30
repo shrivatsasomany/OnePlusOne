@@ -1,0 +1,18 @@
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Game:</strong>
+  <%= link_to @user.game_id, {:controller => "games", :action => "show", :id=>@user.game_id} %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

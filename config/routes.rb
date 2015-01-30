@@ -1,11 +1,22 @@
 Rails.application.routes.draw do
+  resources :question_types
+
+  resources :quantifiers
+
+  resources :users
+
   resources :games
-
   resources :answers
-
-  devise_for :admins
-  devise_for :users, :controllers => { registrations: 'registrations' }
   resources :questions
+
+  root 'users#index'
+
+  get "/log-in" => "sessions#new", as: :log_in
+  post "/log-in" => "sessions#create", as: :sign_up
+  get "/log-out" => "sessions#destroy", as: :log_out
+
+  get "/get-user-api" => "users#api", as: :users_api
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -61,4 +72,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  # get "/ruby" => RubyFu
 end

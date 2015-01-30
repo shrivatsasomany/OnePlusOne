@@ -1,17 +1,33 @@
 <%= form_for(@answer) do |f| %>
-  <% if @answer.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
+    <% if @answer.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
 
-      <ul>
-      <% @answer.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @answer.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :answer_text %>
+      <%= f.text_field :answer_text %>
     </div>
-  <% end %>
+    <div class="field">
+      <%= f.label :quantifier %>
+      <%= f.collection_select :quantifier, Quantifier.order(:text),:text, :text, include_blank: false %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <%= f.hidden_field :question_id, :value => params[:question_id]%>
+
+    <div class="field">
+      <%= f.label :answer_image %>
+      <%= f.file_field :answer_image %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>

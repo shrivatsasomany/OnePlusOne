@@ -33,8 +33,12 @@ gem 'pg'
 gem 'carrierwave'
 gem 'mini_magick'
 
-# Devise for Authentication
-gem 'devise'
+
+# PaperClip Image Upload
+gem 'paperclip', github: 'thoughtbot/paperclip'
+
+#AWS
+gem 'aws-sdk'
 
 #CanCan for permissions definition
 gem 'cancan'
@@ -42,9 +46,18 @@ gem 'cancan'
 #Role Model for user role definition
 gem 'role_model'
 
+#Annotation for models
+gem 'annotate'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem "bcrypt"
+
+# Data visualization
+gem 'rails-erd'
+gem 'railroady'
+
+#Seed-Dump
+gem 'seed_dump'
 
 # Use unicorn as the app server
 # gem 'unicorn'

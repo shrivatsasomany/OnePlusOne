@@ -13,6 +13,15 @@ Rails.application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  #S3 credentials for Paperclip
+  config.paperclip_defaults = {
+      :storage => :s3,
+      :bucket => 'oneplusoneimages',
+      :s3_credentials => {
+          :access_key_id => 'AKIAJ7MG2SVIGK5KGAQA',
+          :secret_access_key => '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'
+      }
+  }
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 

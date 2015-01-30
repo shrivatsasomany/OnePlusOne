@@ -5,26 +5,19 @@
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:OPO_Dev</jdbc-url>
-      <user-name>postgres</user-name>
-      <user-password>dfcbdfc6dfdedfcfdfc9dfc6dfcbdfc4dfd9dfc3dfc4dfcd</user-password>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails OnePlusOne: test" uuid="ed231f5d-2ffe-4e51-9c66-fdb256a70c02">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:OPO_Test</jdbc-url>
-      <user-name>postgres</user-name>
-      <user-password>dfcbdfc6dfdedfcfdfc9dfc6dfcbdfc4dfd9dfc3dfc4dfcd</user-password>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails OnePlusOne: production" uuid="5d1f903a-5978-4ded-87b6-014c15e61b64">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:OPO_Prod</jdbc-url>
-      <user-name>postgres</user-name>
-      <user-password>dfcbdfc6dfdedfcfdfc9dfc6dfcbdfc4dfd9dfc3dfc4dfcd</user-password>
       <libraries />
     </data-source>
   </component>
 </project>
-
