@@ -37,6 +37,9 @@ gem 'mini_magick'
 # PaperClip Image Upload
 gem 'paperclip', github: 'thoughtbot/paperclip'
 
+#AWS
+gem 'aws-sdk'
+
 #CanCan for permissions definition
 gem 'cancan'
 

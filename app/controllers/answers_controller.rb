@@ -14,10 +14,11 @@ class AnswersController < ApplicationController
     elsif params.has_key?(:question_id) && params.has_key?(:quantifier)
       @answers = Answer.where(:quantifier =>  params[:quantifier]) & Answer.where(:question_id => params[:question_id])
     elsif params.has_key?(:location) && params.has_key?(:quantifier)
-      @location_answers =
-      @answers = Answer.where(:quantifier =>  params[:quantifier]) & Answer.joins(:questions).where(:questions => {:location => params[:location]})
+      @answers = Answer.where(:quantifier =>  params[:quantifier]) & Answer.where(:location => params[:location])
+    elsif params.has_key?(:location)
+      @answers = Answer.where(:location => params[:location])
     end
-      respond_with(@answers)
+    respond_with(@answers)
   end
 
   def show
@@ -85,6 +86,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:answer_text, :user_id, :question_id, :quantifier)
+    params.require(:answer).permit(:answer_text, :user_id, :question_id, :quantifier, :answer_image, :location)
   end
 end
